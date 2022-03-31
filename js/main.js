@@ -1,5 +1,17 @@
 const button = document.querySelector(".but")
-let container, frame, lastShape, lastColor
+let container, frame, shapes = ['flower', 'plant', 'rainbow', 'ribbon', 'thing'], key = [0, 1, 2, 3, 4], palette
+
+function shapesRandom() {
+  let a
+  let b
+  for (var i = 0; i < 5; i++) {
+    a = key[i]
+    b = Math.floor(Math.random() * 5)
+    key.splice(i, 1, key[b])
+    key[b] = a
+  }
+  palette = Math.floor(Math.random() * 5) + 1
+}
 
 function randomSize(n) {
   let max = n * 1.2;
@@ -85,7 +97,7 @@ function randomPositionTop(max, shapeSize, i) {
   return position
 }
 
-function randomColor() {
+function randomShapeEl() {
 
 }
 
@@ -93,9 +105,11 @@ function generateShape(frame, i) {
   const shape = document.createElement('img');
 
   let color
-  let shapeEl
 
-  shape.setAttribute('src', './images/flower1.svg')
+  let n = key[i-1]
+  n = './images/' + shapes[n] + ' ' + palette + i + '.svg';
+
+  shape.setAttribute('src', n)
 
   shape.classList.add('shape')
 
@@ -118,6 +132,10 @@ function generateShape(frame, i) {
 
  function generate(n){
   frame.innerHTML = '';
+  shapesRandom()
+  console.log(key);
+  console.log(shapes);
+  console.log(palette);
   for (var i = 0; i < 5; i++) {
     generateShape(frame, n);
     n++
